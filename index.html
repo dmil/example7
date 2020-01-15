@@ -30,7 +30,7 @@ var y = d3.scaleLinear().range([height, 0]);
 // define the line
 var valueline = d3.line()
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
+    .y(function(d) { return y(d.approve); });
 
 // append the svg obgect to the body of the page
 // appends a 'group' element to 'svg'
@@ -43,18 +43,18 @@ var svg = d3.select("body").append("svg")
           "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
-d3.csv("dummy.csv", function(error, data) {
+d3.csv("output.csv", function(error, data) {
   if (error) throw error;
 
   // format the data
   data.forEach(function(d) {
       d.date = parseTime(d.date);
-      d.close = +d.close;
+      d.approve = +d.approve;
   });
 
   // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.close; })]);
+  y.domain([0, d3.max(data, function(d) { return d.approve; })]);
 
   // Add the valueline path.
   // svg.append("path")
@@ -68,7 +68,7 @@ d3.csv("dummy.csv", function(error, data) {
     .enter().append("circle")
       .attr("r", 5)
       .attr("cx", function(d) { return x(d.date); })
-      .attr("cy", function(d) { return y(d.close); });
+      .attr("cy", function(d) { return y(d.approve); });
 
   // Add the X Axis
   svg.append("g")
